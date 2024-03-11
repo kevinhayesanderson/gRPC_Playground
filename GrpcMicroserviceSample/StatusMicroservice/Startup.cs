@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StatusMicroservice.Services;
 
 namespace StatusMicroservice
 {
@@ -26,6 +27,8 @@ namespace StatusMicroservice
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<StatusManagerService>();
+
+                endpoints.MapGrpcService<JobManagerService>();
 
                 endpoints.MapGet("/", async context =>
                 {

@@ -18,7 +18,9 @@ namespace ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddSingleton<IGrpcStatusClient>(p => new GrpcStatusClient(Configuration["ServerUrl"]));
+            services.AddSingleton<IGrpcJobsClient>(p => new GrpcJobsClient(Configuration["ServerUrl"]));
 
             services.AddOpenApiDocument();
         }
