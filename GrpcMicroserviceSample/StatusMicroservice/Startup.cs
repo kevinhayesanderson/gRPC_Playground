@@ -13,6 +13,16 @@ namespace StatusMicroservice
         {
             services.AddGrpc();
             services.AddSingleton<IStateStore, StateStore>();
+
+            services.AddCors(o => o.AddPolicy("AllowAnyGrpcWeb", builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithExposedHeaders("Grpc-Status",
+                "Grpc-Message", "Grpc-Encoding",
+                "Grpc-Accept-Encoding");
+            }));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -24,9 +34,14 @@ namespace StatusMicroservice
 
             app.UseRouting();
 
+            app.UseGrpcWeb();
+            app.UseCors();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<StatusManagerService>();
+                endpoints.MapGrpcService<StatusManagerService>()
+                .EnableGrpcWeb()
+                .RequireCors("AllowAnyGrpcWeb");
 
                 endpoints.MapGrpcService<JobManagerService>();
 

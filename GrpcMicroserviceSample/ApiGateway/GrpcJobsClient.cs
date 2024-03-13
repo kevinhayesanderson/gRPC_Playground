@@ -29,6 +29,7 @@ namespace ApiGateway
         public void Dispose()
         {
             _channel.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public async Task SendJobs(IEnumerable<JobModel> jobs)
