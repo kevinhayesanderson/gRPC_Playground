@@ -1,0 +1,56 @@
+﻿@page 
+@model IndexModel 
+@{ ViewData["Title"] = "Home page"; }
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="row" style="padding-top: 50px;">
+    <div class="col-md-6">
+        <div class="control-group">
+            <div>
+                <label for="job-description">
+                    Job description:
+                </label>
+                <input type="text" id="job-description" name="job-description" />
+            </div>
+            <button id="btn-send-single">
+                Send Single Job
+            </button>
+        </div>
+        <div class="control-group">
+            <div>
+                <label for="jobs-to-send">
+                    Number of jobs to send:
+                </label>
+                <input type="text" id="jobs-to-send" name="jobs-to-send" />
+            </div>
+            <button id="btn-send-multiple">
+                Send Multiple Jobs
+            </button>
+        </div>
+        <div class="control-group">
+            <div>
+                <label for="jobs-to-trigger">
+                    Number of jobs to trigger:
+                </label>
+                <input type="text" id="jobs-to-trigger" name="jobs-to-trigger" />
+            </div>
+            <button id="btn-trigger-multiple">
+                Trigger Multiple Jobs
+            </button>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <p>Responses from the server:</p>
+        <pre id="signalr-message-panel"></pre>
+    </div>
+</div>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"
+    integrity="sha512-7rhBJh1om/W5Ztx7WiYOR9h2wlSaTmPyQMoHFtbT/FVNIA12y6S6I8HY9mrBS1uJ3dSU/R3qaSAXsGYuRjMDxg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+></script>

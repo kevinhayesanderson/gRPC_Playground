@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatusMicroservice", "Statu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcBlazorClient", "GrpcBlazorClient\GrpcBlazorClient.csproj", "{81A9EEA9-7958-40AE-92D3-3B7374AD8CE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalrApplication", "SignalrApplication\SignalrApplication.csproj", "{B3010EC7-536C-4AF7-9DC2-DF5741CE00B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{81A9EEA9-7958-40AE-92D3-3B7374AD8CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81A9EEA9-7958-40AE-92D3-3B7374AD8CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81A9EEA9-7958-40AE-92D3-3B7374AD8CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3010EC7-536C-4AF7-9DC2-DF5741CE00B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3010EC7-536C-4AF7-9DC2-DF5741CE00B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3010EC7-536C-4AF7-9DC2-DF5741CE00B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3010EC7-536C-4AF7-9DC2-DF5741CE00B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
