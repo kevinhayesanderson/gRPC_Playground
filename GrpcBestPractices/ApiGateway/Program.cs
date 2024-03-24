@@ -147,7 +147,12 @@ app.MapGet("multiple-connections/{count}", (int count) =>
     {
         HttpHandler = new SocketsHttpHandler()
         {
-            EnableMultipleHttp2Connections = true
+            //Setting up keep-alive pings
+            PooledConnectionIdleTimeout = Timeout.InfiniteTimeSpan,
+            KeepAlivePingDelay = TimeSpan.FromSeconds(60),
+            KeepAlivePingTimeout = TimeSpan.FromSeconds(30),
+            //for multiple connections for concurrent calls
+            EnableMultipleHttp2Connections = true, 
         }
     });
     var stopWatch = Stopwatch.StartNew();
