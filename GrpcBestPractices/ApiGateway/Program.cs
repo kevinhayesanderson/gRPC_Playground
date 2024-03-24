@@ -169,11 +169,29 @@ app.MapGet("multiple-connections/{count}", (int count) =>
             });
         }));
     }
-    Task.WaitAll(concurrentJobs.ToArray());
+    Task.WaitAll([.. concurrentJobs]);
     response.RequestProcessingTime = stopWatch.ElapsedMilliseconds;
     return response;
 })
 .WithName("GetDataFromMultipleConnections")
+.WithOpenApi();
+
+app.MapGet("streaming-call/{count}", async (int count, IGrpcPerformanceClient clientWrapper) =>
+{
+    var stopWatch = Stopwatch.StartNew();
+    var response = new ResponseModel();
+    var clientNames = new List<string>();
+
+    for (var i = 0; i < count; i++)
+    {
+        clientNames.Add($"client {i + 1}");
+    }
+
+    response.PerformanceStatuses.AddRange(await clientWrapper.GetPerformanceStatuses(clientNames));
+    response.RequestProcessingTime = stopWatch.ElapsedMilliseconds;
+    return response;
+})
+.WithName("GetPerformanceFromStreamingCall")
 .WithOpenApi();
 
 app.Run();
