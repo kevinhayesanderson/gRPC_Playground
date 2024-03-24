@@ -8,6 +8,7 @@ namespace ApiGateway
     public interface IGrpcPerformanceClient
     {
         Task<ResponseModel.PerformanceStatusModel> GetPerformanceStatus(string clientName);
+
         Task<IEnumerable<ResponseModel.PerformanceStatusModel>> GetPerformanceStatuses(IEnumerable<string> clientNames);
     }
 

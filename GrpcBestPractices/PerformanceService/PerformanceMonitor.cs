@@ -35,7 +35,6 @@ namespace PerformanceService
                     MemoryUsage = random.NextDouble() * 100,
                     ProcessesRunning = random.Next(),
                     ActiveConnections = random.Next()
-
                 });
             }
         }

@@ -117,7 +117,7 @@ app.MapGet("initialized-client/{count}", async (int count) =>
 .WithName("GetPerformanceFromNewClient")
 .WithOpenApi();
 
-app.MapGet("single-connection/{count}", (int count) => 
+app.MapGet("single-connection/{count}", (int count) =>
 {
     using var channel = GrpcChannel.ForAddress(serverUrl);
     var stopWatch = Stopwatch.StartNew();
@@ -126,7 +126,7 @@ app.MapGet("single-connection/{count}", (int count) =>
     for (var i = 0; i < count; i++)
     {
         var client = new Monitor.MonitorClient(channel);
-        concurrentJobs.Add(Task.Run(() => 
+        concurrentJobs.Add(Task.Run(() =>
         {
             client.GetPerformance(new PerformanceStatusRequest
             {
@@ -152,7 +152,7 @@ app.MapGet("multiple-connections/{count}", (int count) =>
             KeepAlivePingDelay = TimeSpan.FromSeconds(60),
             KeepAlivePingTimeout = TimeSpan.FromSeconds(30),
             //for multiple connections for concurrent calls
-            EnableMultipleHttp2Connections = true, 
+            EnableMultipleHttp2Connections = true,
         }
     });
     var stopWatch = Stopwatch.StartNew();
