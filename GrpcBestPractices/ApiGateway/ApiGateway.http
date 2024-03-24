@@ -12,3 +12,9 @@ Accept: application/json
 GET {{ApiGateway_HostAddress}}/initialized-client/1000/
 Accept: application/json
 ###
+GET {{ApiGateway_HostAddress}}/single-connection/10000/
+Accept: application/json
+###
+GET {{ApiGateway_HostAddress}}/multiple-connections/10000/
+Accept: application/json
+###

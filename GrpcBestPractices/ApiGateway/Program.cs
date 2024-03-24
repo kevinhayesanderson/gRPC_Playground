@@ -89,9 +89,10 @@ app.MapGet("client-wrapper/{count}", async (int count, IGrpcPerformanceClient cl
 .WithName("GetPerformanceFromClientWrapper")
 .WithOpenApi();
 
+string serverUrl = builder.Configuration["ServerUrl"];
+
 app.MapGet("initialized-client/{count}", async (int count) =>
 {
-    string serverUrl = builder.Configuration["ServerUrl"];
     var stopWatch = Stopwatch.StartNew();
     var response = new ResponseModel();
     for (var i = 0; i < count; i++)
@@ -114,6 +115,60 @@ app.MapGet("initialized-client/{count}", async (int count) =>
     return response;
 })
 .WithName("GetPerformanceFromNewClient")
+.WithOpenApi();
+
+app.MapGet("single-connection/{count}", (int count) => 
+{
+    using var channel = GrpcChannel.ForAddress(serverUrl);
+    var stopWatch = Stopwatch.StartNew();
+    var response = new ResponseModel();
+    var concurrentJobs = new List<Task>();
+    for (var i = 0; i < count; i++)
+    {
+        var client = new Monitor.MonitorClient(channel);
+        concurrentJobs.Add(Task.Run(() => 
+        {
+            client.GetPerformance(new PerformanceStatusRequest
+            {
+                ClientName = $"client {i + 1}"
+            });
+        }));
+    }
+    Task.WaitAll(concurrentJobs.ToArray());
+    response.RequestProcessingTime = stopWatch.ElapsedMilliseconds;
+    return response;
+})
+.WithName("GetDataFromSingleConnection")
+.WithOpenApi();
+
+app.MapGet("multiple-connections/{count}", (int count) =>
+{
+    using var channel = GrpcChannel.ForAddress(serverUrl, new GrpcChannelOptions
+    {
+        HttpHandler = new SocketsHttpHandler()
+        {
+            EnableMultipleHttp2Connections = true
+        }
+    });
+    var stopWatch = Stopwatch.StartNew();
+    var response = new ResponseModel();
+    var concurrentJobs = new List<Task>();
+    for (var i = 0; i < count; i++)
+    {
+        var client = new Monitor.MonitorClient(channel);
+        concurrentJobs.Add(Task.Run(() =>
+        {
+            client.GetPerformance(new PerformanceStatusRequest
+            {
+                ClientName = $"client {i + 1}"
+            });
+        }));
+    }
+    Task.WaitAll(concurrentJobs.ToArray());
+    response.RequestProcessingTime = stopWatch.ElapsedMilliseconds;
+    return response;
+})
+.WithName("GetDataFromMultipleConnections")
 .WithOpenApi();
 
 app.Run();
