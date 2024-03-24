@@ -15,6 +15,10 @@
             public int ProcessesRunning { get; set; }
 
             public int ActiveConnections { get; set; }
+
+            public byte[] DataLoad1 { get; set; }
+
+            public byte[] DataLoad2 { get; set; }
         }
     }
 }

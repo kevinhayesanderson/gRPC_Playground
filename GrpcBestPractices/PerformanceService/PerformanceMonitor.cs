@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using Google.Protobuf;
+using Grpc.Core;
 using Performance;
 using Monitor = Performance.Monitor;
 
@@ -10,15 +11,7 @@ namespace PerformanceService
             PerformanceStatusRequest request,
             ServerCallContext context)
         {
-            var random = new Random();
-
-            return Task.FromResult(new PerformanceStatusResponse
-            {
-                CpuPercentageUsage = random.NextDouble() * 100,
-                MemoryUsage = random.NextDouble() * 100,
-                ProcessesRunning = random.Next(),
-                ActiveConnections = random.Next()
-            });
+            return Task.FromResult(GetPerformaceResponse());
         }
 
         public override async Task GetManyPerformanceStats(
@@ -28,15 +21,27 @@ namespace PerformanceService
         {
             while (await requestStream.MoveNext())
             {
-                var random = new Random();
-                await responseStream.WriteAsync(new PerformanceStatusResponse
-                {
-                    CpuPercentageUsage = random.NextDouble() * 100,
-                    MemoryUsage = random.NextDouble() * 100,
-                    ProcessesRunning = random.Next(),
-                    ActiveConnections = random.Next()
-                });
+                await responseStream.WriteAsync(GetPerformaceResponse());
             }
+        }
+
+        private PerformanceStatusResponse GetPerformaceResponse()
+        {
+            var random = new Random();
+            var dataLoad1 = new byte[100];
+            var dataLoad2 = new byte[100];
+            random.NextBytes(dataLoad1);
+            random.NextBytes(dataLoad2);
+
+            return new PerformanceStatusResponse
+            {
+                CpuPercentageUsage = random.NextDouble() * 100,
+                MemoryUsage = random.NextDouble() * 100,
+                ProcessesRunning = random.Next(),
+                ActiveConnections = random.Next(),
+                DataLoad1 = UnsafeByteOperations.UnsafeWrap(dataLoad1),
+                DataLoad2 = ByteString.CopyFrom(dataLoad2)
+            };
         }
     }
 }
