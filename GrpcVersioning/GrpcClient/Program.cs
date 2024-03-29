@@ -21,11 +21,11 @@ var response = await client.GetStatusAsync(new Stats.V1.StatusRequest
 });
 
 Console.WriteLine($"Server name: {response.ServerName}");
-Console.WriteLine($"Server description:{ response.ServerDescription}");
-Console.WriteLine($"Number of connections:{ response.NumberOfConnections}");
+Console.WriteLine($"Server description:{response.ServerDescription}");
+Console.WriteLine($"Number of connections:{response.NumberOfConnections}");
 Console.WriteLine($"CPU usage: {response.CpuUsage}");
 Console.WriteLine($"Memory usage: {response.MemoryUsage}");
 Console.WriteLine($"Errors logged: {response.ErrorsLogged}");
-Console.WriteLine($"Catastrophic failures logged:{ response.CatastrophicFailuresLogged}");
+Console.WriteLine($"Catastrophic failures logged:{response.CatastrophicFailuresLogged}");
 Console.WriteLine($"Active: {response.Active}");
 Console.ReadKey();
