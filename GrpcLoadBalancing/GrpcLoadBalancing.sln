@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcServer2", "GrpcServer2\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{12BE3B43-A3EE-4CC6-B89B-C4620B0C4E8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Http2Proxy", "Http2Proxy\Http2Proxy.csproj", "{6A6091F5-3AEA-41B6-9A58-9AF503FD3B37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{12BE3B43-A3EE-4CC6-B89B-C4620B0C4E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12BE3B43-A3EE-4CC6-B89B-C4620B0C4E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12BE3B43-A3EE-4CC6-B89B-C4620B0C4E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6091F5-3AEA-41B6-9A58-9AF503FD3B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6091F5-3AEA-41B6-9A58-9AF503FD3B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6091F5-3AEA-41B6-9A58-9AF503FD3B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6091F5-3AEA-41B6-9A58-9AF503FD3B37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
