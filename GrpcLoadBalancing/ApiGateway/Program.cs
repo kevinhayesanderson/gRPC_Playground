@@ -1,4 +1,6 @@
 using ApiGateway;
+using Grpc.Net.Client.Balancer;
+using System.Net;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,8 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IGrpcClientWrapper, GrpcClientWrapper>();
+
 var addresses = builder.Configuration.GetSection("ServerAddresses").Get<List<string>>();
-builder.Services.AddSingleton<IGrpcClientWrapper>(new GrpcClientWrapper(addresses));
+builder.Services.AddSingleton<ResolverFactory>
+    (new StaticResolverFactory(addr => addresses
+        .Select(a => new BalancerAddress(a.Replace("//", string.Empty).Split(':')[1], int.Parse(a.Split(':')[2])))
+        .ToArray()));
+
+builder.Services.AddSingleton<ResolverFactory, DiskResolverFactory>();
+builder.Services.AddSingleton<LoadBalancerFactory, RandomizedBalancerFactory>();
 
 var app = builder.Build();
 
@@ -66,6 +76,45 @@ app.MapPost("load-balancer/{count}", async (int count, IGrpcClientWrapper client
     };
 })
 .WithName("PostDataViaLoadBalancer")
+.WithOpenApi();
+
+app.MapPost("dns-load-balancer/{count}", async (int count, IGrpcClientWrapper clientWrapper) =>
+{
+    var stopWatch = Stopwatch.StartNew();
+    var processedCount = await clientWrapper.SendDataViaDnsLoadBalancer(count);
+    return new ApiResponse
+    {
+        DataItemsProcessed = processedCount,
+        RequestProcessingTime = stopWatch.ElapsedMilliseconds
+    };
+})
+.WithName("PostDataViaDnsLoadBalancer")
+.WithOpenApi();
+
+app.MapPost("static-load-balancer/{count}", async (int count, IGrpcClientWrapper clientWrapper) =>
+{
+    var stopWatch = Stopwatch.StartNew();
+    var processedCount = await clientWrapper.SendDataViaStaticLoadBalancer(count);
+    return new ApiResponse
+    {
+        DataItemsProcessed = processedCount,
+        RequestProcessingTime = stopWatch.ElapsedMilliseconds
+    };
+})
+.WithName("PostDataViaStaticLoadBalancer")
+.WithOpenApi();
+
+app.MapPost("custom-load-balancer/{count}", async (int count, IGrpcClientWrapper clientWrapper) =>
+{
+    var stopWatch = Stopwatch.StartNew();
+    var processedCount = await clientWrapper.SendDataViaCustomLoadBalancer(count);
+    return new ApiResponse
+    {
+        DataItemsProcessed = processedCount,
+        RequestProcessingTime = stopWatch.ElapsedMilliseconds
+    };
+})
+.WithName("PostDataViaCustomLoadBalancer")
 .WithOpenApi();
 
 app.Run();
