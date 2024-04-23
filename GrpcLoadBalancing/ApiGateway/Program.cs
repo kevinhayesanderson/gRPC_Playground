@@ -1,6 +1,5 @@
 using ApiGateway;
 using Grpc.Net.Client.Balancer;
-using System.Net;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
