@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcDependencies", "GrpcDependencies\GrpcDependencies.csproj", "{DFDA11AC-6DCB-470A-AB3D-C126DEADA2D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManagerService", "DeviceManagerService\DeviceManagerService.csproj", "{C88FA76E-3253-4284-959E-5A123F05B29D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFDA11AC-6DCB-470A-AB3D-C126DEADA2D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFDA11AC-6DCB-470A-AB3D-C126DEADA2D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFDA11AC-6DCB-470A-AB3D-C126DEADA2D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFDA11AC-6DCB-470A-AB3D-C126DEADA2D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C88FA76E-3253-4284-959E-5A123F05B29D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C88FA76E-3253-4284-959E-5A123F05B29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C88FA76E-3253-4284-959E-5A123F05B29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C88FA76E-3253-4284-959E-5A123F05B29D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
