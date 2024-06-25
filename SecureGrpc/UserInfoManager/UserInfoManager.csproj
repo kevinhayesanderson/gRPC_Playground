@@ -15,4 +15,11 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
   </ItemGroup>
 
+  <!-- Need to add .pfx to the output directory -->
+  <ItemGroup>
+    <None Update="UserInfoManager.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

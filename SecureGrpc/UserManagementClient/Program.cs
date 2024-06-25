@@ -9,7 +9,12 @@ Console.WriteLine("Hello, World!");
 Console.WriteLine("Please enter the gRPC service URL.");
 var url = Console.ReadLine();
 
-using var channel = GrpcChannel.ForAddress(url);
+var handler = new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+};
+
+using var channel = GrpcChannel.ForAddress(url, new GrpcChannelOptions { HttpHandler = handler });
 
 var client = new UserManager.UserManagerClient(channel);
 
