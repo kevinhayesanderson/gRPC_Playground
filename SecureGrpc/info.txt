@@ -1,0 +1,38 @@
+Types of Certificates:
+.pfx - contains private and public key, stays on server alone
+.crt - Contains public key, distributed to clients
+
+SelfSignetCertificate powershell Commands:
+
+New-SelfSignedCertificate -DnsName "localhost", "localhost" -CertStoreLocation "cert:\LocalMachine\My" -NotAfter (Get-Date).AddYears(20) -FriendlyName "localhost-client" -KeyUsageProperty All -KeyUsage CertSign, CRLSign, DigitalSignature
+
+This will create SelfSignedCertificate in:
+
+PSParentPath: Microsoft.PowerShell.Security\Certificate::LocalMachine\My
+
+The Certificate has:
+
+Thumbprint                                Subject              EnhancedKeyUsageList
+----------                                -------              --------------------
+1F643E991C362E808DD040FE99DC0340BED80A19  CN=localhost         {Client Authentication, Server Authentication}
+
+Creating password for .pfx:
+
+ $password = ConvertTo-SecureString -String "password" -Force -AsPlainText
+ 
+ Export .pfx and .crt in Server App path:
+ For .pfx:
+ 
+ Get-ChildItem -Path Cert:\LocalMachine\My\1F643E991C362E808DD040FE99DC0340BED80A19 | Export-PfxCertificate -FilePath UserInfoManager.pfx -Password $password
+ 
+ For .crt:
+ 
+ Export-Certificate -Cert Cert:\LocalMachine\My\1F643E991C362E808DD040FE99DC0340BED80A19 -FilePath UserInfoManager.crt
+ 
+Then trust the certificate by importing it into a trusted root:
+
+Import-PfxCertificate -FilePath UserInfoManager.pfx -CertStoreLocation "Cert:\LocalMachine\Root" -Password $password
+
+Path:
+
+PSParentPath: Microsoft.PowerShell.Security\Certificate::LocalMachine\Root
