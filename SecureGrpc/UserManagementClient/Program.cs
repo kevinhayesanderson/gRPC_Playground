@@ -1,7 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Google.Protobuf.WellKnownTypes;
+﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Net.Client;
+using System.Security.Cryptography.X509Certificates;
 using Users;
 
 Console.WriteLine("Hello, World!");
@@ -9,10 +9,15 @@ Console.WriteLine("Hello, World!");
 Console.WriteLine("Please enter the gRPC service URL.");
 var url = Console.ReadLine();
 
-var handler = new HttpClientHandler
-{
-    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-};
+//var handler = new HttpClientHandler
+//{
+//    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+//};
+
+var certificate = new X509Certificate2("UserManagementClient.pfx", "password");
+
+var handler = new HttpClientHandler();
+handler.ClientCertificates.Add(certificate);
 
 using var channel = GrpcChannel.ForAddress(url, new GrpcChannelOptions { HttpHandler = handler });
 
