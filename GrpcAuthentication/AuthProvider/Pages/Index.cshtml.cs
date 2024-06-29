@@ -2,9 +2,9 @@
 // See LICENSE in the project root for license information.
 
 using Duende.IdentityServer;
-using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection;
 
 namespace AuthProvider.Pages.Home;
 
@@ -23,5 +23,6 @@ public class Index : PageModel
             ?.InformationalVersion.Split('+').First()
             ?? "unavailable";
     }
+
     public IdentityServerLicense? License { get; }
 }

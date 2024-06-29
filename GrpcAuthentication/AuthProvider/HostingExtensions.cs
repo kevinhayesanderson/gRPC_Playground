@@ -1,6 +1,4 @@
 using Duende.IdentityServer;
-using AuthProvider;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Serilog;
 
 namespace AuthProvider;
@@ -28,7 +26,6 @@ internal static class HostingExtensions
         isBuilder.AddInMemoryApiScopes(Config.ApiScopes);
         isBuilder.AddInMemoryClients(Config.Clients);
 
-
         // if you want to use server-side sessions: https://blog.duendesoftware.com/posts/20220406_session_management/
         // then enable it
         //isBuilder.AddServerSideSessions();
@@ -40,7 +37,6 @@ internal static class HostingExtensions
         //   );
         //builder.Services.Configure<RazorPagesOptions>(options =>
         //    options.Conventions.AuthorizeFolder("/ServerSideSessions", "admin"));
-
 
         builder.Services.AddAuthentication()
             .AddGoogle(options =>
@@ -56,11 +52,11 @@ internal static class HostingExtensions
 
         return builder.Build();
     }
-    
+
     public static WebApplication ConfigurePipeline(this WebApplication app)
-    { 
+    {
         app.UseSerilogRequestLogging();
-    
+
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -70,7 +66,7 @@ internal static class HostingExtensions
         app.UseRouting();
         app.UseIdentityServer();
         app.UseAuthorization();
-        
+
         app.MapRazorPages()
             .RequireAuthorization();
 

@@ -5,7 +5,6 @@ using System.Diagnostics.Metrics;
 
 namespace AuthProvider.Pages;
 
-#pragma warning disable CA1034 // Nested types should not be visible
 #pragma warning disable CA1724 // Type names should not match namespaces
 
 /// <summary>
@@ -14,7 +13,7 @@ namespace AuthProvider.Pages;
 public static class Telemetry
 {
     private static readonly string ServiceVersion = typeof(Telemetry).Assembly.GetName().Version!.ToString();
-    
+
     /// <summary>
     /// Service name for telemetry.
     /// </summary>
@@ -25,8 +24,6 @@ public static class Telemetry
     /// </summary>
     public static class Metrics
     {
-#pragma warning disable 1591
-
         /// <summary>
         /// Name of Counters
         /// </summary>
@@ -59,8 +56,6 @@ public static class Telemetry
             public const string Granted = "granted";
             public const string Denied = "denied";
         }
-
-#pragma warning restore 1591
 
         /// <summary>
         /// Meter for the IdentityServer host project
